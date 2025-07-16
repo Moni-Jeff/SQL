@@ -4,6 +4,7 @@ From servicerecordsunit5
 where  servicedate between '2023-01-01' and '2023-12-31'
 --Identify how many services were provided during each month in 2023
 Select EXTRACT (MONTH FROM servicedate) as month,
+       COUNT (servicetype) 
 FROM  servicerecordsunit5
 WHERE servicedate BETWEEN '2023-01-01' AND '2023-12-31' 
 GROUP BY month;
