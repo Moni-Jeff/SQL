@@ -1,0 +1,28 @@
+-- Identify the total number of services provided in 2023
+Select count (servicetype) as TotalServices
+From servicerecordsunit5 
+where  servicedate between '2023-01-01' and '2023-12-31'
+--Identify how many services were provided during each month in 2023
+Select EXTRACT (MONTH FROM servicedate) as month,
+FROM  servicerecordsunit5
+WHERE servicedate BETWEEN '2023-01-01' AND '2023-12-31' 
+GROUP BY month;
+
+--Identify staff who provided the highest number of services
+SELECT employeename, employeeid, COUNT(servicetype) AS TotalServices
+FROM servicerecordsunit5
+GROUP BY employeename, employeeid 
+order by TotalServices desc
+
+-- (Challenge) Identify staff who received an average rating of 7 or higher 
+SELECT employeename, employeeid, avg(servicerating)
+FROM servicerecordsunit5
+GROUP BY employeename, employeeid 
+having (avg(servicerating)) > 7
+order by avg(servicerating) desc;
+
+-- Identify the highest-rated services.
+select *
+from servicerecordsunit5
+where servicerating = (SELECT(MAX(servicerating)) from servicerecordsunit5)
+order by servicerating desc
